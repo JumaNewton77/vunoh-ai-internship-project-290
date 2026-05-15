@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Detail</title>
+
+    <style>
+
+        body{
+            font-family:Arial, sans-serif;
+            background:#f4f6f9;
+            padding:40px;
+        }
+
+        .container{
+            max-width:900px;
+            margin:auto;
+            background:white;
+            padding:30px;
+            border-radius:12px;
+            box-shadow:0px 0px 10px rgba(0,0,0,0.1);
+        }
+
+        h1{
+            color:#1e3a8a;
+        }
+
+        .section{
+            margin-top:25px;
+            padding:20px;
+            background:#f9fafb;
+            border-radius:10px;
+        }
+
+        pre{
+            white-space:pre-wrap;
+            word-wrap:break-word;
+            background:#eef2ff;
+            padding:15px;
+            border-radius:8px;
+        }
+
+        a{
+            text-decoration:none;
+            background:#2563eb;
+            color:white;
+            padding:10px 18px;
+            border-radius:8px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <a href="/dashboard/">
+        Back Dashboard
+    </a>
+
+    <h1>Task Detail</h1>
+
+    <div class="section">
+
+        <p>
+            <strong>Task Code:</strong>
+            {{ task.task_code }}
+        </p>
+
+        <p>
+            <strong>Customer Request:</strong>
+            {{ task.customer_request }}
+        </p>
+
+        <p>
+            <strong>Intent:</strong>
+            {{ task.intent }}
+        </p>
+
+        <p>
+            <strong>Risk Score:</strong>
+            {{ task.risk_score }}
+        </p>
+
+        <p>
+            <strong>Employee Assignment:</strong>
+            {{ task.employee_assignment }}
+        </p>
+
+        <p>
+            <strong>Status:</strong>
+            {{ task.status }}
+        </p>
+
+        <p>
+            <strong>Created At:</strong>
+            {{ task.created_at }}
+        </p>
+
+    </div>
+
+    <div class="section">
+
+        <h2>Extracted Entities</h2>
+
+        <pre>{{ task.extracted_entities }}</pre>
+
+    </div>
+
+    <div class="section">
+
+        <h2>Generated Workflow Steps</h2>
+
+        <pre>{{ task.generated_steps }}</pre>
+
+    </div>
+
+    <div class="section">
+
+        <h2>WhatsApp Message</h2>
+
+        <p>{{ task.whatsapp_message }}</p>
+
+    </div>
+
+    <div class="section">
+
+        <h2>Email Message</h2>
+
+        <p>{{ task.email_message }}</p>
+
+    </div>
+
+    <div class="section">
+
+        <h2>SMS Message</h2>
+
+        <p>{{ task.sms_message }}</p>
+
+    </div>
+    <div class="section">
+  <h3>OCR Extracted Text</h3>
+  <pre>{{ task.ocr_text|default:"No document uploaded" }}</pre>
+</div>
+
+
+</div>
+
+</body>
+</html>

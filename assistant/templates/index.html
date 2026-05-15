@@ -1,0 +1,89 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vunoh Diaspora AI Assistant</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f4f6f9; padding:40px; }
+    .container { max-width:900px; margin:auto; background:white; padding:30px; border-radius:12px; box-shadow:0px 0px 10px rgba(0,0,0,0.1); }
+    h1 { color:#1e3a8a; margin-bottom:10px; }
+    textarea { width:100%; padding:15px; border:1px solid #d1d5db; border-radius:8px; font-size:14px; margin-top:10px; resize:vertical; }
+    button { background:#2563eb; color:white; border:none; padding:12px 20px; border-radius:8px; cursor:pointer; font-size:15px; margin-top:15px; }
+    button:hover { background:#1e40af; }
+    .section { margin-top:25px; padding:20px; background:#f9fafb; border-radius:10px; }
+    pre { background:#eef2ff; padding:15px; border-radius:8px; white-space:pre-wrap; word-wrap:break-word; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Vunoh Diaspora AI Assistant</h1>
+  <p>Describe the service you need back at home.</p>
+
+  <form id="aiForm" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <textarea name="customer_request" rows="8" placeholder="Example: Please verify my land title deed in Kitale" required></textarea>
+    <input type="file" name="document" accept="image/*,.pdf">
+    <button type="submit">Submit Request</button>
+</form>
+
+
+  {% comment %} <form id="aiForm"> {% endcomment %}
+    <textarea name="customer_request" rows="8" placeholder="Example: Please verify my land title deed in Kitale" required></textarea>
+    <button type="submit">Submit Request</button>
+  </form>
+
+  <div id="responseArea" style="margin-top:30px;"></div>
+</div>
+
+<script>
+document.getElementById('aiForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const requestText = e.target.customer_request.value;
+  const responseArea = document.getElementById('responseArea');
+  responseArea.innerHTML = "<p><em>Processing request...</em></p>";
+
+  try {
+    const res = await fetch('/api/ai/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ customer_request: requestText })
+    });
+    const data = await res.json();
+
+
+
+responseArea.innerHTML = `
+  <h2>Task Created Successfully</h2>
+  <div class="section">
+    <p><strong>Intent:</strong> ${data.intent}</p>
+    <p><strong>Risk Score:</strong> ${data.risk_score}</p>
+    <p><strong>Employee Assignment:</strong> ${data.employee_assignment}</p>
+  </div>
+  <div class="section">
+    <h3>Extracted Entities</h3>
+    <pre>${JSON.stringify(data.entities, null, 2)}</pre>
+  </div>
+  <div class="section">
+    <h3>Generated Steps</h3>
+    <pre>${JSON.stringify(data.steps, null, 2)}</pre>
+  </div>
+  <div class="section">
+    <h3>WhatsApp Message</h3>
+    <p>${data.whatsapp_message}</p>
+  </div>
+  <div class="section">
+    <h3>Email Message</h3>
+    <p>${data.email_message}</p>
+  </div>
+  <div class="section">
+    <h3>SMS Message</h3>
+    <p>${data.sms_message}</p>
+  </div>
+  <div class="section">
+    <h3>OCR Extracted Text</h3>
+    <pre>${data.ocr_text || "No document uploaded"}</pre>
+  </div>
+`;
+</script>
+</body>
+</html>
