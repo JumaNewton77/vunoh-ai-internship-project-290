@@ -30,6 +30,9 @@ Frontend
 Backend
 - Python / Django
 
+Database
+- PostegreSQL
+
 AI & Tools
 - OpenAI API 'https://console.groq.com/'
 - Machine Learning Libraries 
