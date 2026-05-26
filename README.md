@@ -1,134 +1,548 @@
-Vunoh AI Internship Project
+# Vunoh Diaspora AI Assistant
 
-Overview
-This project was developed as part of the Vunoh AI Internship Program.  
-It demonstrates practical implementation of AI and software development concepts including problem-solving, automation, and intelligent application design.
+An AI-powered web application built for the Vunoh Global AI Internship Practical Test that helps Kenyans living abroad initiate and track important services back home.
 
-The project showcases:
-- Clean and maintainable code structure
-- AI-driven functionality
-- Real-world application development practices
-- Version control using Git and GitHub
+The platform uses Artificial Intelligence to understand natural language requests, extract structured information, assess risk, generate fulfillment steps, assign tasks to relevant teams, and communicate updates through multiple channels.
 
+---
 
-Features
-- AI-powered functionality
-- User-friendly interface
-- Scalable architecture
-- API integration support
-- Responsive design
-- Modular codebase
+# Problem Statement
 
+Kenyans living abroad often struggle to manage important tasks back home such as:
 
-Tech Stack
+- Sending money to family members
+- Hiring local services
+- Verifying important documents
+- Requesting airport transfer services
+- Tracking existing requests
 
-Frontend
-- HTML5
-- CSS3
-- JavaScript
+Most people currently rely on WhatsApp, phone calls, or relatives, which can be slow, unreliable, and difficult to track.
 
-Backend
-- Python / Django
+This project aims to solve that problem through an AI-powered assistant.
 
-Database
-- PostegreSQL
+---
 
-AI & Tools
-- OpenAI API 'https://console.groq.com/'
-- Machine Learning Libraries 
-- Git & GitHub
-- API 'Postman Agent'
+# Features
 
+### 1. Natural Language Input
 
-Project Structure
+Users can type requests in plain English:
 
-bash
-project-root/
-│
-├── src/              # Source code
-├── public/           # Public assets
-├── models/           # AI/ML models
-├── docs/             # Documentation
-├── README.md
-└── requirements.txt
+Examples:
 
+```text
+I need to send KES 15,000 to my mother in Kisumu urgently
 
-Installation
+Please verify my land title deed for my Karen property
 
-1 Clone the repository
+Can someone clean my apartment in Westlands on Friday?
+```
 
-bash
+---
+
+### 2. AI Intent Extraction
+
+The AI extracts:
+
+#### Intent
+
+Supported intents:
+
+- send_money
+- hire_service
+- verify_document
+- airport_transfer
+- check_status
+
+#### Entities
+
+Examples of extracted entities:
+
+- Amount
+- Recipient
+- Location
+- Urgency
+- Service Type
+- Document Type
+
+Example output:
+
+```json
+{
+    "intent":"send_money",
+    "entities":{
+        "amount":2000,
+        "recipient":"mother",
+        "location":"Kitale",
+        "urgency":"high"
+    }
+}
+```
+
+---
+
+### 3. Risk Scoring System
+
+Each request receives a calculated risk score based on real-world diaspora considerations.
+
+Risk factors include:
+
+| Rule | Score |
+|--------|--------|
+| Money transfer > KES 100,000 | +35 |
+| Urgent request | +15 |
+| Land title verification | +25 |
+| Unknown recipient | +20 |
+| Trusted customer history | -10 |
+
+Risk levels:
+
+| Score | Level |
+|---------|-------|
+| 0–30 | Low |
+| 31–60 | Medium |
+| 61–100 | High |
+
+Example:
+
+```text
+Risk Score: 75
+Level: High
+
+Reasons:
+- Large transfer amount
+- Urgent request
+- Document verification
+```
+
+---
+
+### 4. Task Creation
+
+Every request generates a task record containing:
+
+- Unique task code
+- Extracted intent
+- Entities
+- Risk score
+- Status
+- Employee assignment
+- Creation timestamp
+
+Example:
+
+```text
+Task Code: VNH-2026-001
+```
+
+---
+
+### 5. AI Workflow Step Generation
+
+The AI creates task-specific fulfillment steps.
+
+Example:
+
+Money transfer:
+
+1. Verify sender identity
+2. Confirm recipient details
+3. Review risk indicators
+4. Initiate transfer
+5. Send confirmation
+
+Document verification:
+
+1. Receive document
+2. Verify ownership records
+3. Legal review
+4. Approve verification
+5. Notify customer
+
+---
+
+### 6. Three Communication Formats
+
+For each task, the AI generates:
+
+### WhatsApp Style
+
+```text
+Hi Newton 👋
+
+We've received your money transfer request.
+
+Task Code: VNH-2026-001
+
+We'll keep you updated.
+```
+
+### Email Style
+
+```text
+Subject: Vunoh Task Confirmation
+
+Dear Customer,
+
+Your request has been received successfully.
+
+Task Code: VNH-2026-001
+Risk Score: Medium
+Status: Pending
+
+Regards,
+Vunoh Team
+```
+
+### SMS Style
+
+```text
+VNH-2026-001: Request received. Status pending.
+```
+
+---
+
+### 7. Employee Assignment
+
+Tasks are automatically assigned:
+
+| Intent | Team |
+|----------|------|
+| send_money | Finance |
+| hire_service | Operations |
+| verify_document | Legal |
+| airport_transfer | Logistics |
+| check_status | Customer Support |
+
+---
+
+### 8. Dashboard
+
+Dashboard features:
+
+- View all tasks
+- View risk scores
+- Status tracking
+- Employee assignment
+- Task creation dates
+- Analytics cards
+- Search functionality
+- Task detail view
+
+---
+
+### 9. Database Persistence
+
+Stored data:
+
+- Tasks
+- Extracted entities
+- Workflow steps
+- Generated messages
+- Risk scores
+- Employee assignments
+- Status history
+
+---
+
+# Technology Stack
+
+## Backend
+
+- Python
+- Django
+
+## Frontend
+
+- HTML
+- CSS
+- Vanilla JavaScript
+
+## Database
+
+- SQLite
+
+## AI Services
+
+- Groq API
+- Llama 3.3 70B
+
+## OCR
+
+- Tesseract OCR
+
+---
+
+# System Architecture
+
+```text
+User Request
+      ↓
+Frontend Form
+      ↓
+Django Backend
+      ↓
+AI Processing Layer
+      ↓
+Intent + Entity Extraction
+      ↓
+Risk Scoring Engine
+      ↓
+Task Generation
+      ↓
+Workflow Generation
+      ↓
+Employee Assignment
+      ↓
+Database Storage
+      ↓
+Dashboard Display
+```
+
+---
+
+# Installation
+
+## Clone repository
+
+```bash
 git clone https://github.com/JumaNewton77/vunoh-ai-internship-project-290.git
+```
 
-2. Navigate into the project
+Move into project:
 
-bash
+```bash
 cd vunoh-ai-internship-project-290
+```
 
+---
 
-3. Install dependencies
+## Create virtual environment
 
-For Python
+Windows:
 
-bash
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+Linux/Mac:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+---
+
+## Install dependencies
+
+```bash
 pip install -r requirements.txt
+```
 
-For Node.js
+---
 
-bash
-npm install
+## Create environment variables
 
+Create:
 
-Running the Project
+```text
+.env
+```
 
-Python
+Add:
 
-bash
-python app.py
+```env
+SECRET_KEY=your_secret_key
 
-Node.js
+GROQ_API_KEY=your_groq_api_key
+```
 
-bash
-npm start
+---
 
- 
-Learning Objectives
+## Run migrations
 
-This internship project helped in:
+```bash
+python manage.py migrate
+```
 
-Understanding AI application workflows
-Improving software engineering practices
-Working with APIs and integrations
-Building deployable applications
-Collaborating using GitHub
+---
 
-Future Improvements
+## Run server
 
-Add authentication system
-Improve AI model accuracy
-Deploy to cloud platforms
-Add database integration
-Enhance UI/UX
+```bash
+python manage.py runserver
+```
 
-Contributing
+Open:
 
-Contributions are welcome.
+```text
+http://127.0.0.1:8000
+```
 
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to your branch
-5. Open a Pull Request
+---
 
- 
+# SQL Dump
 
-Author : Juma Newton
-GitHub: [https://github.com/JumaNewton77](https://github.com/JumaNewton77)
+SQL dump file included:
 
-Acknowledgements
+```text
+database/database_dump.sql
+```
 
-Special thanks to:
+Contains:
 
-Vunoh AI Internship Program
-Open-source contributors
- 
+- Full schema
+- Sample tasks
+- Messages
+- Risk scores
+- Employee assignments
+
+---
+
+# Sample Tasks
+
+Included sample records:
+
+1. Send KES 15,00 to Kitale
+2. Verify Kitale land title
+3. Apartment cleaning request
+4. Airport transfer request
+5. Status check request
+
+---
+
+# Decisions I Made and Why
+
+## AI tools used
+
+### ChatGPT
+
+Used for:
+
+- Prompt refinement
+- Architecture discussions
+- README creation
+- Debugging
+
+### GitHub Copilot
+
+Used for:
+
+- Route generation
+- Boilerplate code assistance
+
+### Groq LLM
+
+Used for:
+
+- Intent extraction
+- Step generation
+- Message generation
+
+---
+
+## Prompt Design
+
+The prompt was designed to:
+
+- Force JSON output
+- Avoid markdown responses
+- Restrict possible intents
+- Ensure consistent formatting
+- Separate entities from free text
+
+I intentionally excluded conversational responses because they make parsing difficult.
+
+---
+
+## One AI suggestion I changed
+
+AI initially suggested storing workflow steps as comma-separated text.
+
+I changed this to JSON storage because:
+
+- Easier retrieval
+- Better scalability
+- Supports future editing
+- Cleaner database structure
+
+---
+
+## One thing that did not work as expected
+
+Groq occasionally returned malformed JSON responses.
+
+Example:
+
+```text
+```json
+{
+"intent":"send_money"
+}
+```
+```
+
+This caused parsing errors.
+
+Solution:
+
+I added response cleanup and validation before processing:
+
+python 
+content=content.replace("```json","")
+content=content.replace("```","")
+content=content.strip()
+```
+
+---
+
+# Future Improvements
+
+Potential improvements:
+
+- Real authentication system
+- User accounts
+- Email integration
+- WhatsApp API integration
+- Real payment integration
+- Analytics dashboard charts
+- Notification system
+- Deployment with Docker
+- PostgreSQL database
+- Role-based employee access
+
+---
+
+# Evaluation Alignment
+
+| Requirement | Implemented |
+|-------------|-------------|
+| Natural language input | ✅ |
+| AI intent extraction | ✅ |
+| Risk scoring | ✅ |
+| Task creation | ✅ |
+| Step generation | ✅ |
+| Three message formats | ✅ |
+| Employee assignment | ✅ |
+| Dashboard | ✅ |
+| Database persistence | ✅ |
+| SQL dump | ✅ |
+
+---
+
+# Author
+
+Newton Juma
+
+BSc Computer Science  
+Meru University of Science and Technology
+
+GitHub:
+
+https://github.com/JumaNewton77
+
+---
+
+# License

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>
+
+Settings
+
+</h2>
+
+<div class="card p-4">
+
+<h4>User Information</h4>
+
+<p>
+
+Username:
+
+{{request.user.username}}
+
+</p>
+
+<p>
+
+Role:
+
+{{request.user.role}}
+
+</p>
+
+</div>
+
+{% endblock %}

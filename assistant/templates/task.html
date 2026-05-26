@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Tasks</h2>
+
+<table class="table">
+
+<tr>
+
+<th>Code</th>
+<th>Intent</th>
+<th>Status</th>
+
+</tr>
+
+{% for task in tasks %}
+
+<tr>
+
+<td>{{task.task_code}}</td>
+
+<td>{{task.intent}}</td>
+
+<td>{{task.status}}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endblock %}
