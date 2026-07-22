@@ -3,35 +3,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Create Account · Vunoh</title>
 
     <style>
 
-        body{
-            font-family:Arial;
-            background:#f4f4f4;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            height:100vh;
+        * {
+            box-sizing: border-box;
         }
 
-        .container{
-            background:white;
-            padding:30px;
-            border-radius:10px;
-            width:400px;
-            box-shadow:0 0 10px rgba(0,0,0,0.1);
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            background: #f5f7fa;
         }
 
-        button{
-            width:100%;
-            padding:10px;
-            margin-top:20px;
-            background:#28a745;
-            color:white;
-            border:none;
-            cursor:pointer;
+        /* Left brand panel */
+
+        .brand-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px;
+            background: linear-gradient(135deg, #0767f7 0%, #054bb8 100%);
+            color: white;
+        }
+
+        .brand-panel h1 {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        .brand-panel p {
+            font-size: 16px;
+            line-height: 1.6;
+            opacity: 0.9;
+            max-width: 380px;
+        }
+
+        .brand-features {
+            margin-top: 40px;
+            list-style: none;
+            padding: 0;
+        }
+
+        .brand-features li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            font-size: 15px;
+            opacity: 0.95;
+        }
+
+        .brand-features li::before {
+            content: "✓";
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+
+        /* Right form panel */
+
+        .form-panel {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .form-card {
+            width: 100%;
+            max-width: 380px;
+        }
+
+        .form-card h2 {
+            margin: 0 0 8px 0;
+            color: #1a1a2e;
+            font-size: 26px;
+        }
+
+        .form-card .subtitle {
+            color: #6b7280;
+            margin-bottom: 28px;
+            font-size: 14px;
+        }
+
+        .field-group {
+            margin-bottom: 18px;
+        }
+
+        .field-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 6px;
+        }
+
+        .field-group input[type="text"],
+        .field-group input[type="password"],
+        .field-group input[type="email"] {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .field-group input:focus {
+            outline: none;
+            border-color: #0767f7;
+            box-shadow: 0 0 0 3px rgba(7, 103, 247, 0.12);
+        }
+
+        .field-group .help-text {
+            display: block;
+            font-size: 12px;
+            color: #9ca3af;
+            margin-top: 6px;
+        }
+
+        .field-group .field-error {
+            display: block;
+            font-size: 12px;
+            color: #dc2626;
+            margin-top: 6px;
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper .toggle-visibility {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #6b7280;
+            font-size: 12px;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .non-field-errors {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #b91c1c;
+            padding: 12px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 18px;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 13px;
+            margin-top: 8px;
+            background: #0767f7;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button[type="submit"]:hover {
+            background: #054bb8;
+        }
+
+        .form-card .login-link {
+            text-align: center;
+            margin-top: 22px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .form-card .login-link a {
+            color: #0767f7;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .form-card .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive: hide brand panel on narrow screens */
+
+        @media (max-width: 800px) {
+            .brand-panel {
+                display: none;
+            }
         }
 
     </style>
@@ -39,30 +216,83 @@
 </head>
 <body>
 
-<div class="container">
-
-    <h2>Create Account</h2>
-
-    <form method="POST">
-
-        {% csrf_token %}
-
-        {{ form.as_p }}
-
-        <button type="submit">
-            Register
-        </button>
-
-    </form>
-
+<div class="brand-panel">
+    <h1>Vunoh AI</h1>
     <p>
-        Already have an account?
-        <a href="/login/">
-            Login
-        </a>
+        One place to send money, hire trusted help, and verify documents
+        back home — wherever in the world you are.
     </p>
 
+    <ul class="brand-features">
+        <li>AI-assisted requests in plain English</li>
+        <li>Real-time risk scoring on every task</li>
+        <li>Track status from anywhere</li>
+    </ul>
 </div>
+
+<div class="form-panel">
+    <div class="form-card">
+
+        <h2>Create your account</h2>
+        <p class="subtitle">Get started managing tasks back home in minutes.</p>
+
+        <form method="POST" novalidate>
+
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+            <div class="non-field-errors">
+                {% for error in form.non_field_errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% for field in form %}
+            <div class="field-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+
+                {% if "password" in field.name %}
+                <div class="password-wrapper">
+                    {{ field }}
+                    <button type="button" class="toggle-visibility" onclick="togglePassword(this)">Show</button>
+                </div>
+                {% else %}
+                    {{ field }}
+                {% endif %}
+
+                {% if field.help_text %}
+                <small class="help-text">{{ field.help_text|safe }}</small>
+                {% endif %}
+
+                {% for error in field.errors %}
+                <span class="field-error">{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endfor %}
+
+            <button type="submit">Create Account</button>
+
+        </form>
+
+        <p class="login-link">
+            Already have an account? <a href="{% url 'login' %}">Log in</a>
+        </p>
+
+    </div>
+</div>
+
+<script>
+
+function togglePassword(button) {
+    const wrapper = button.closest('.password-wrapper');
+    const input = wrapper.querySelector('input');
+    const isHidden = input.type === 'password';
+    input.type = isHidden ? 'text' : 'password';
+    button.textContent = isHidden ? 'Hide' : 'Show';
+}
+
+</script>
 
 </body>
 </html>
